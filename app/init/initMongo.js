@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-function initDatabase() {
+function initMongo() {
   mongoose.connect('mongodb://localhost/test', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -14,4 +14,4 @@ function initDatabase() {
   })
 }
 
-exports.default = initDatabase
+exports.default = initMongo

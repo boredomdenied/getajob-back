@@ -4,7 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "PORT=5001 nodemon ./app/app.js",
+    "devstop": "kill -9 $(lsof -i :5001 | tail -1 | awk '{print $2}')",
+    "pro": "NODE_ENV=production pm2 start --name backend ./app/app.js -i 2",
+    "prostop": "pm2 stop backend &&  pm2 delete backend"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +27,8 @@
     "validator": "^13.0.0"
   },
   "devDependencies": {
+    "nodemon": "^2.0.3",
+    "pm2": "^4.4.0",
     "prettier": "2.0.5"
   }
 }

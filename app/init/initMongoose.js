@@ -1,7 +1,7 @@
 const validator = require('validator')
 const mongoose = require('mongoose')
 
-function initModels() {
+function initMongoose() {
   const User = new mongoose.Schema({
     firstname: {
       type: String,
@@ -37,4 +37,4 @@ function initModels() {
   }
 }
 
-exports.default = initModels
+exports.default = initMongoose
