@@ -12,19 +12,20 @@ function registerUser(Users) {
         if (userExists) {
           res.status(403).send({ message: 'This email is already registered to an account'})
         } else {
-          const uuid = v4()
-          const user = await new Users(req.body, { email_uuid: uuid })
+          const uuid = await v4()
+          req.body.email_uuid = uuid
+          const user = await new Users(req.body)
             .save()
             .catch((error) => {
               res.send(error.message)
             })
             await generateToken(res, user._id, user.firstname)
             const emailStatus = await sendVerifyEmail(user)
-            emailStatus === 200
-              ? res.status(200).send({ user: 'Successfully created'})
-              : res.status(403).send({ message:
-                'Account created, but email was not able to be sent. Please contact the site admin'})
+            emailStatus === 202
+              ? res.status(200).send({ message: 'Successfully created'})
+              : res.status(403).send({ message: 'Something went wrong'})
           }
+          // res.send({message: 'User successfully created'})
       }
     } catch (error) {
       console.error(error)
@@ -33,4 +34,4 @@ function registerUser(Users) {
   }
 }
 
-exports.default = registerUser
+exports.default = registerUser 

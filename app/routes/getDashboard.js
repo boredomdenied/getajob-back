@@ -11,7 +11,7 @@ function getDashboard(Users) {
       }
       const { firstname } = jwt.verify(token, process.env.JWT_SECRET)
       // const { email } = await Users.findOne({ _id: id }).exec()
-
+      
       if (firstname) {
         return res.send({ firstname })
       } else {

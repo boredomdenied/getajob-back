@@ -9,6 +9,8 @@ const verifyEmail = require('../routes/verifyEmail').default
 const resetPassword = require('../routes/resetPassword').default
 const sendResetEmail = require('../mailers/sendResetPassword').default
 const sendResetPassword = require('../mailers/sendResetPassword').default
+const sendVerifyEmail = require('../mailers/sendVerifyEmail').default
+
 
 function initExpress({Users}) {
   const app = express()

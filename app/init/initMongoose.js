@@ -2,6 +2,7 @@ const validator = require('validator')
 const mongoose = require('mongoose')
 
 function initMongoose() {
+  mongoose.set('useFindAndModify', false)
   const User = new mongoose.Schema({
     firstname: {
       type: String,
@@ -36,9 +37,6 @@ function initMongoose() {
     verified: {
       type: Boolean,
       default: false,
-      validate: value  => {
-        return validator.isBool(value)
-      },
     },
     email_uuid: {
       type: String,
