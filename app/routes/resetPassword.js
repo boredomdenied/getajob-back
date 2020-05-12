@@ -17,10 +17,6 @@ function resetPassword(Users) {
             message: 'Email has already been sent. Please check inbox or spam',
           })
         } else {
-          // const uuid = await v4()
-          //  user.password_uuid = uuid
-          //  console.log(user.password_uuid)
-          //  console.log(user._id)
           const uuid = v4()
           const emailStatus = await sendResetPassword(user, uuid)
           if (emailStatus === 202) {
@@ -35,7 +31,6 @@ function resetPassword(Users) {
               .send({ message: 'The email was not successfully sent' })
           }
         }
-        // res.send({message: 'User successfully created'})
       }
     } catch (error) {
       console.error(error)

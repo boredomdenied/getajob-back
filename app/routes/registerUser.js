@@ -30,7 +30,6 @@ function registerUser(Users) {
             ? res.status(200).send({ message: 'Successfully created' })
             : res.status(403).send({ message: 'Something went wrong' })
         }
-        // res.send({message: 'User successfully created'})
       }
     } catch (error) {
       console.error(error)

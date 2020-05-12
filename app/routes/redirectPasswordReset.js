@@ -1,4 +1,3 @@
-require('dotenv').config()
 
 function redirectPasswordReset(Users) {
   let web_url = ''

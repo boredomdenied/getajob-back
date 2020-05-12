@@ -2,10 +2,6 @@ require('dotenv').config()
 const generateToken = require('../generateToken')
 
 function resetPasswordInDatabase(Users) {
-  let web_url = ''
-  process.env.NODE_ENV === 'production'
-    ? (web_url = 'https://byreference.engineer')
-    : (web_url = 'http://localhost:3001')
   return async (req, res) => {
     try {
       const user = await Users.findOneAndUpdate(
