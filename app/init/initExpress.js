@@ -7,10 +7,11 @@ const logoutUser = require('../routes/logoutUser').default
 const getDashboard = require('../routes/getDashboard').default
 const verifyEmail = require('../routes/verifyEmail').default
 const resetPassword = require('../routes/resetPassword').default
+const redirectPasswordReset = require('../routes/redirectPasswordReset').default
+const resetPasswordInDatabase = require('../routes/resetPasswordInDatabase').default
 const sendResetEmail = require('../mailers/sendResetPassword').default
 const sendResetPassword = require('../mailers/sendResetPassword').default
 const sendVerifyEmail = require('../mailers/sendVerifyEmail').default
-
 
 function initExpress({Users}) {
   const app = express()
@@ -21,12 +22,14 @@ function initExpress({Users}) {
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Credentials': 'true',
         'Access-Control-Allow-Origin': 'https://byreference.engineer',
+        'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS',
       })
     } else {
       res.set({
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Credentials': 'true',
         'Access-Control-Allow-Origin': 'http://localhost:3001',
+        'Access-Control-Allow-Methods': 'POST, PUT, GET, DELETE, OPTIONS',       
       })
     }
     next()
@@ -37,7 +40,8 @@ function initExpress({Users}) {
   app.get('/api/user/dashboard', getDashboard(Users))
   app.get('/api/user/verify/:uuid', verifyEmail(Users))
   app.post('/api/user/reset/', resetPassword(Users))
-  app.put('/api/user/reset/:uuid', resetPassword(Users))
+  app.get('/api/user/reset/:uuid', redirectPasswordReset(Users))
+  app.post('/api/user/reset/:uuid', resetPasswordInDatabase(Users))
   app.post('/api/auth/register', registerUser(Users))
   app.post('/api/auth/login/', loginUser(Users))
   app.post('/api/auth/logout/', logoutUser())

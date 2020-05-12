@@ -16,7 +16,6 @@ function verifyEmail (Users) {
       }
     } catch (error) {
       console.error(error)
-      // console.log(uuidExists)
       console.log('stuff')
       res.status(403).send({ message: error})
     }

@@ -7,14 +7,14 @@ function initMongoose() {
     firstname: {
       type: String,
       required: true,
-      validate: value => {
+      validate: (value) => {
         return validator.isAlpha(value) && validator.isLength(value, 2, 50)
       },
     },
     lastname: {
       type: String,
       required: true,
-      validate: value => {
+      validate: (value) => {
         return validator.isAlpha(value) && validator.isLength(value, 2, 50)
       },
     },
@@ -23,32 +23,43 @@ function initMongoose() {
       required: true,
       unique: true,
       lowercase: true,
-      validate: value => {
+      validate: (value) => {
         return validator.isEmail(value)
+      },
+    },
+    email_uuid: {
+      type: String,
+      unique: true,
+      validate: (value) => {
+        return validator.isUUID(value)
       },
     },
     password: {
       type: String,
       required: true,
-      validate: value => {
+      validate: (value) => {
         return validator.isAlpha(value) && validator.isLength(value, 8, 50)
       },
+    },
+    password_reset: {
+      type: Boolean,
+      default: false,
     },
     verified: {
       type: Boolean,
       default: false,
     },
-    email_uuid: {
+    password_uuid: {
       type: String,
       unique: true,
-      validate: value => {
+      validate: (value) => {
         return validator.isUUID(value)
+      },
     },
-  },
   })
 
   return {
-    Users: mongoose.model('User', User)
+    Users: mongoose.model('User', User),
   }
 }
 
