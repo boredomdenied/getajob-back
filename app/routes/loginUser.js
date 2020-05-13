@@ -1,4 +1,5 @@
 const generateToken = require('../generateToken')
+const argon2 = require('argon2');
 
 function loginUser (Users) {
   return async (req, res) => {
@@ -9,7 +10,7 @@ function loginUser (Users) {
       } else {
         const user = await Users.findOne({ email: req.body.email }).exec()
         if (user) {
-          if (req.body.password === user.password) {
+          if (await argon2.verify(user.password, req.body.password)) {
             await generateToken(res, user._id, user.firstname)
             console.log('User successfully logged in')
             console.log('Cookies: ', req.cookies)

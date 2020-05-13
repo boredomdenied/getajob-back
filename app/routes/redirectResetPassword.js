@@ -1,5 +1,5 @@
 
-function redirectPasswordReset(Users) {
+function redirecResetPassword(Users) {
   let web_url = ''
   process.env.NODE_ENV === 'production'
     ? (web_url = 'https://byreference.engineer')
@@ -24,4 +24,4 @@ function redirectPasswordReset(Users) {
   }
 }
 
-exports.default = redirectPasswordReset
+exports.default = redirecResetPassword

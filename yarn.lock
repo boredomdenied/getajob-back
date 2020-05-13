@@ -698,6 +698,11 @@ diff@3.5.0:
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.5.0.tgz#800c0dd1e0a8bfbc95835c202ad220fe317e5a12"
   integrity sha512-A46qtFgd+g7pDZinpnwiRJtxbC1hpgf0uzP3iG89scHk0AUC7A1TGxf5OiiOUv/JMZR8GOt8hL900hV0bOy5xA==
 
+dockernode@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/dockernode/-/dockernode-0.1.0.tgz#75b07c24c67c16a530cc799a30331d3e6223e34a"
+  integrity sha1-dbB8JMZ8FqUwzHmaMDMdPmIj40o=
+
 dot-prop@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-5.2.0.tgz#c34ecc29556dc45f1f4c22697b6f4904e0cc4fcb"

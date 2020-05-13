@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "PORT=5001 nodemon ./app/app.js",
     "devstop": "kill -9 $(lsof -i :5001 | tail -1 | awk '{print $2}')",
-    "pro": "NODE_ENV=production pm2 start --name backend ./app/app.js -i -1",
-    "prostop": "pm2 stop backend &&  pm2 delete backend"
+    "pro": "NODE_ENV=production pm2 start --name backend ./app/app.js -i 4",
+    "prostop": "pm2 stop backend &&  pm2 delete backend",
+    "reload": "pm2 reload backend"
   },
   "author": "",
   "license": "ISC",
@@ -19,12 +20,16 @@
   },
   "dependencies": {
     "@sendgrid/mail": "^7.1.0",
+    "argon2": "^0.26.2",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
+    "dockerode": "^3.2.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "honeybadger": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.10",
+    "nginx-conf": "^1.5.0",
     "uuid": "^8.0.0",
     "validator": "^13.0.0"
   },

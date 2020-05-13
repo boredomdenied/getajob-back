@@ -14,7 +14,7 @@ function initTimers() {
   }, 1800000)
   // do every 3 hours
   setInterval(() => {
-    console.log(new Date().toUTCString())
+    // console.log(new Date().toUTCString())
   }, 540000)
   // do daily
   setInterval(() => {

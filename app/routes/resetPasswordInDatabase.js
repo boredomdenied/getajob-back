@@ -1,12 +1,14 @@
 require('dotenv').config()
 const generateToken = require('../generateToken')
+const argon2 = require('argon2');
 
 function resetPasswordInDatabase(Users) {
   return async (req, res) => {
     try {
+      const hash = await argon2.hash(req.body.password)
       const user = await Users.findOneAndUpdate(
         { password_uuid: req.params.uuid },
-        { $set: { password_reset: false, password: req.body.password }}
+        { $set: { password_reset: false, password: hash }}
       ).exec()
       if (user) {
         await generateToken(res, user._id, user.firstname)

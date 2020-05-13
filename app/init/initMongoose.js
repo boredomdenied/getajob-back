@@ -37,9 +37,6 @@ function initMongoose() {
     password: {
       type: String,
       required: true,
-      validate: (value) => {
-        return validator.isAlpha(value) && validator.isLength(value, 8, 50)
-      },
     },
     password_reset: {
       type: Boolean,
