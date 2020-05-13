@@ -1,11 +1,11 @@
 const generateToken = require('../generateToken')
 const sendVerifyEmail = require('../mailers/sendVerifyEmail').default
 const { v4 } = require('uuid')
-const argon2 = require('argon2');
+const argon2 = require('argon2')
 
 const Honeybadger = require('honeybadger').configure({
-  apiKey: '3d60d561'
-});
+  apiKey: '3d60d561',
+})
 
 function registerUser(Users) {
   return async (req, res) => {
@@ -47,7 +47,7 @@ function registerUser(Users) {
               // Extract response msg
               const { headers, body } = response
               Honeybadger.notify(body.errors[0].message)
-              console.error(body.errors[0].message);
+              console.error(body.errors[0].message)
             }
             await Users.findOneAndDelete({ email: req.body.email })
             res.status(403).send({

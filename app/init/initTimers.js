@@ -1,5 +1,4 @@
 function initTimers() {
-
   // do every 1 minutes
   setInterval(() => {
     // console.log(new Date().toUTCString())
@@ -24,7 +23,6 @@ function initTimers() {
   setInterval(() => {
     // console.log(new Date().toUTCString())
   }, 10080000)
-
 }
-  
+
 exports.default = initTimers

@@ -4,12 +4,12 @@ function getDashboard(Users) {
   return async (req, res) => {
     const token = req.cookies.token
     try {
-      if(!token) {
+      if (!token) {
         const error = 'User must be logged in'
         console.error(error)
-        return res.status(403).send({ error }) 
+        return res.status(403).send({ error })
       }
-      const { firstname } = jwt.verify(token, process.env.JWT_SECRET)      
+      const { firstname } = jwt.verify(token, process.env.JWT_SECRET)
       if (firstname) {
         return res.send({ firstname })
       } else {

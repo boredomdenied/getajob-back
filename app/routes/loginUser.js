@@ -1,7 +1,7 @@
 const generateToken = require('../generateToken')
-const argon2 = require('argon2');
+const argon2 = require('argon2')
 
-function loginUser (Users) {
+function loginUser(Users) {
   return async (req, res) => {
     try {
       console.log(Users)
