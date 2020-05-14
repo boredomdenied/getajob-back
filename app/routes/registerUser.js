@@ -36,7 +36,7 @@ function registerUser(Users) {
           const user = await new Users(req.body).save().catch((error) => {
             res.send({ message: error.message })
           }) //  Generate jwt to set cookie & send email
-          await setCookie(res, user._id, user.firstname)
+          // await setCookie(res, user._id, user.firstname)
           const sgcb = await sendVerifyEmail(user)
           if (sgcb >= 200 && sgcb < 300) {
             res.send({ message: 'user successfully created' })
