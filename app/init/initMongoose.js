@@ -3,6 +3,18 @@ const mongoose = require('mongoose')
 
 function initMongoose() {
   mongoose.set('useFindAndModify', false)
+
+  const Container = new mongoose.Schema({
+    created: {
+      type: Date,
+      default: Date.now,
+    },
+    last_modified: {
+      type: Date,
+      default: Date.now,
+    },
+  })
+
   const User = new mongoose.Schema({
     firstname: {
       type: String,
@@ -52,11 +64,16 @@ function initMongoose() {
       validate: (value) => {
         return validator.isUUID(value)
       },
+      container: {
+        type: String,
+        unique: true,
+      },
     },
   })
 
   return {
     Users: mongoose.model('User', User),
+    Containers: mongoose.model('Container', Container),
   }
 }
 

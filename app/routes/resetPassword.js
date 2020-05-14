@@ -34,6 +34,7 @@ function resetPassword(Users) {
       }
     } catch (error) {
       console.error(error)
+      await Honeybadger.notify(error)
       res.status(500).send({ message: error.body })
     }
   }

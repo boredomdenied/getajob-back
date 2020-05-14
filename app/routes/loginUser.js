@@ -1,5 +1,9 @@
-const generateToken = require('../generateToken')
+const setCookie = require('../setCookie')
 const argon2 = require('argon2')
+
+const Honeybadger = require('honeybadger').configure({
+  apiKey: '3d60d561',
+})
 
 function loginUser(Users) {
   return async (req, res) => {
@@ -7,11 +11,11 @@ function loginUser(Users) {
       console.log(Users)
       if (!req.body.email || !req.body.password) {
         res.send('Please provide an email and password for login')
-      } else {
+      } else { // Find user
         const user = await Users.findOne({ email: req.body.email }).exec()
-        if (user) {
+        if (user) { // User found we check password & setCookie
           if (await argon2.verify(user.password, req.body.password)) {
-            await generateToken(res, user._id, user.firstname)
+            await setCookie(res, user._id, user.firstname)
             console.log('User successfully logged in')
             console.log('Cookies: ', req.cookies)
             res.send({ message: 'User successfully logged in' })
@@ -26,7 +30,11 @@ function loginUser(Users) {
       }
     } catch (error) {
       console.error(error)
-      res.status(500).send({ message: 'Something went wrong' })
+      await Honeybadger.notify(error)
+      res.status(500).send({
+        message:
+          'Something went wrong on our end. Please try again in a moment',
+      })
     }
   }
 }

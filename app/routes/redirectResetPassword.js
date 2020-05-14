@@ -1,3 +1,7 @@
+const Honeybadger = require('honeybadger').configure({
+  apiKey: '3d60d561',
+})
+
 function redirecResetPassword(Users) {
   let web_url = ''
   process.env.NODE_ENV === 'production'
@@ -18,7 +22,8 @@ function redirecResetPassword(Users) {
     } catch (error) {
       console.error(error)
       console.log('stuff')
-      res.status(403).send({ message: error })
+      await Honeybadger.notify(error)
+      res.status(500).send({ message: error })
     }
   }
 }

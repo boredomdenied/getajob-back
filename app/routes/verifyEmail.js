@@ -1,3 +1,7 @@
+const Honeybadger = require('honeybadger').configure({
+  apiKey: '3d60d561',
+})
+
 function verifyEmail(Users) {
   let web_url = ''
   process.env.NODE_ENV === 'production'
@@ -10,7 +14,6 @@ function verifyEmail(Users) {
         { verified: true }
       ).exec()
       if (uuidExists) {
-        console.log('found uuid')
         res.redirect(`${web_url}/dashboard`)
       } else {
         console.log('the account was not found')
@@ -18,8 +21,8 @@ function verifyEmail(Users) {
       }
     } catch (error) {
       console.error(error)
-      console.log('stuff')
-      res.status(403).send({ message: error })
+      await Honeybadger.notify(error)
+      res.status(500).send({ message: error })
     }
   }
 }

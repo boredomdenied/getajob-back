@@ -1,11 +1,13 @@
-function initTimers() {
+const checkContainers = require('../checkContainers').default
+
+function initTimers(Users, Containers) {
   // do every 1 minutes
   setInterval(() => {
     // console.log(new Date().toUTCString())
   }, 60000)
   // do every 5 minutes
   setInterval(() => {
-    // console.log(new Date().toUTCString())
+    checkContainers(Containers)
   }, 300000)
   // do every 30 minutes
   setInterval(() => {

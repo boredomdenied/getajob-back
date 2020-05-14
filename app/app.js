@@ -1,9 +1,9 @@
-const initTimers = require('./init/initTimers').default
 const initMongo = require('./init/initMongo').default
 const initMongoose = require('./init/initMongoose').default
 const initExpress = require('./init/initExpress').default
+const initTimers = require('./init/initTimers').default
 
-initTimers()
 initMongo()
-const models = initMongoose()
-initExpress(models)
+const { Users, Containers } = initMongoose()
+initExpress(Users, Containers)
+initTimers(Users, Containers)

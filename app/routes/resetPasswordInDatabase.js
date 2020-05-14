@@ -1,6 +1,10 @@
 require('dotenv').config()
-const generateToken = require('../generateToken')
+const setCookie = require('../setCookie')
 const argon2 = require('argon2')
+
+const Honeybadger = require('honeybadger').configure({
+  apiKey: '3d60d561',
+})
 
 function resetPasswordInDatabase(Users) {
   return async (req, res) => {
@@ -11,7 +15,7 @@ function resetPasswordInDatabase(Users) {
         { $set: { password_reset: false, password: hash } }
       ).exec()
       if (user) {
-        await generateToken(res, user._id, user.firstname)
+        await setCookie(res, user._id, user.firstname)
         res.send({ message: 'Password successfully updated' })
       } else {
         console.log('the uuid was not found')
@@ -19,7 +23,7 @@ function resetPasswordInDatabase(Users) {
       }
     } catch (error) {
       console.error(error)
-      console.log('stuff')
+      await Honeybadger.notify(error)
       res.status(403).send({ message: error })
     }
   }
