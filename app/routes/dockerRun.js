@@ -11,10 +11,10 @@ function dockerRun(Users, Containers) {
       const user = await Users.findOne({ _id: id }).exec()
       user || res.status(403).send({ message: 'User must be logged in' })
       if (user && user.container) {
-        fs.writeFile('./test/test.js', req.body.code, (err) => {
+        fs.writeFile(`./build/${req.body.pagename}`, req.body.code, (err) => {
           err && res.status(403).send({ message: 'unable to write file' })
         })
-        const archive = tar.pack('./test', {
+        const archive = tar.pack('./build', {
           // entries: ['robots.txt'],
         })
         var docker = new Docker({ socketPath: '/var/run/docker.sock' })
