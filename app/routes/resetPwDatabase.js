@@ -6,7 +6,7 @@ const Honeybadger = require('honeybadger').configure({
   apiKey: '3d60d561',
 })
 
-function resetPasswordInDatabase(Users) {
+function resetPwDatabase(Users) {
   return async (req, res) => {
     try {
       const hash = await argon2.hash(req.body.password)
@@ -29,4 +29,4 @@ function resetPasswordInDatabase(Users) {
   }
 }
 
-exports.default = resetPasswordInDatabase
+exports.default = resetPwDatabase

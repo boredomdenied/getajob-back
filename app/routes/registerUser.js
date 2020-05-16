@@ -1,4 +1,3 @@
-const setCookie = require('../setCookie')
 const sendVerifyEmail = require('../mailers/sendVerifyEmail').default
 const { v4 } = require('uuid')
 const argon2 = require('argon2')
@@ -14,29 +13,38 @@ function registerUser(Users) {
         !req.body.email ||
         !req.body.password ||
         !req.body.firstname ||
-        !req.body.lastname
+        !req.body.lastname ||
+        !req.body.username
       ) {
         res
           .status(403)
           .send({ message: 'Please fill out all fields for registration' })
-      } else { //  Find user
-        const userExists = await Users.findOne({ email: req.body.email }).exec()
-        if (userExists) {
+      } else {
+        //  Find user
+        const emailExists = await Users.findOne({
+          email: req.body.email,
+        }).exec()
+        const usernameExists = await Users.findOne({
+          username: req.body.username,
+        }).exec()
+        if (emailExists) {
           res
             .status(403)
             .send({ message: 'This email is already registered to an account' })
-        } else {  // set uuids
+        } else if (usernameExists) {
+          res.status(403).send({ message: 'This username is already taken' })
+        } else {
+          // set uuids
           let email_uuid = v4()
           req.body.email_uuid = email_uuid
           let password_uuid = v4()
           req.body.password_uuid = password_uuid
-             //  Hash pw & save user
+          //  Hash pw & save user
           const hash = await argon2.hash(req.body.password)
           req.body.password = hash
           const user = await new Users(req.body).save().catch((error) => {
             res.send({ message: error.message })
-          }) //  Generate jwt to set cookie & send email
-          // await setCookie(res, user._id, user.firstname)
+          }) //  Send verification email
           const sgcb = await sendVerifyEmail(user)
           if (sgcb >= 200 && sgcb < 300) {
             res.send({ message: 'user successfully created' })

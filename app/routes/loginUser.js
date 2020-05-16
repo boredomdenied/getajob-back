@@ -11,11 +11,13 @@ function loginUser(Users) {
       console.log(Users)
       if (!req.body.email || !req.body.password) {
         res.send('Please provide an email and password for login')
-      } else { // Find user
+      } else {
+        // Find user
         const user = await Users.findOne({ email: req.body.email }).exec()
-        if (user && user.verified === true) { // User found we check password & setCookie
+        if (user && user.verified === true) {
+          // User found we check password & setCookie
           if (await argon2.verify(user.password, req.body.password)) {
-            await setCookie(res, user._id, user.firstname)
+            await setCookie(res, user._id, user.firstname, user.username)
             console.log('User successfully logged in')
             console.log('Cookies: ', req.cookies)
             res.send({ message: 'User successfully logged in' })

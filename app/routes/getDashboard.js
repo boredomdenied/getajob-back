@@ -9,7 +9,7 @@ function getDashboard(Users) {
         console.error(error)
         return res.status(403).send({ error })
       }
-      const { firstname } = jwt.verify(token, process.env.JWT_SECRET)
+      const { firstname, id } = jwt.verify(token, process.env.JWT_SECRET)
       if (firstname) {
         return res.send({ firstname })
       } else {

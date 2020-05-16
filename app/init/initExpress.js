@@ -9,10 +9,9 @@ const getDashboard = require('../routes/getDashboard').default
 const verifyEmail = require('../routes/verifyEmail').default
 const resetPassword = require('../routes/resetPassword').default
 const redirecResetPassword = require('../routes/redirectResetPassword').default
-const resetPasswordInDatabase = require('../routes/resetPasswordInDatabase')
-  .default
-const provisionDockerContainer = require('../routes/provisionDockerContainer')
-  .default
+const resetPwDatabase = require('../routes/resetPwDatabase').default
+const createContainer = require('../routes/createContainer').default
+const dockerRun = require('../routes/dockerRun').default
 
 function initExpress(Users, Containers) {
   const app = express()
@@ -25,11 +24,11 @@ function initExpress(Users, Containers) {
     })
     process.env.NODE_ENV === 'production'
       ? res.set({
-          'Access-Control-Allow-Origin': 'https://byreference.engineer',
-        })
+        'Access-Control-Allow-Origin': 'https://byreference.engineer',
+      })
       : res.set({
-          'Access-Control-Allow-Origin': 'http://localhost:3001',
-        })
+        'Access-Control-Allow-Origin': 'http://localhost:3001',
+      })
     next()
   })
   app.disable('x-powered-by')
@@ -41,14 +40,12 @@ function initExpress(Users, Containers) {
   app.get('/api/user/verify/:uuid', verifyEmail(Users))
   app.get('/api/user/reset/:uuid', redirecResetPassword(Users))
   app.post('/api/user/reset/', resetPassword(Users))
-  app.post('/api/user/reset/:uuid', resetPasswordInDatabase(Users))
+  app.post('/api/user/reset/:uuid', resetPwDatabase(Users))
   app.post('/api/auth/register', registerUser(Users))
   app.post('/api/auth/login/', loginUser(Users, Containers))
   app.post('/api/auth/logout/', logoutUser(Users, Containers))
-  app.post('/api/docker/provision', provisionDockerContainer(Users, Containers))
-  app.post('/api/docker/run/:uuid', async (req, res) => {
-    Users, Containers
-  })
+  app.post('/api/docker/provision', createContainer(Users, Containers))
+  app.post('/api/docker/run/', dockerRun(Users, Containers))
   app.post('/api/docker/stop/:uuid', async (req, res) => {
     Users, Containers
   })

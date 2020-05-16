@@ -5,6 +5,10 @@ function initMongoose() {
   mongoose.set('useFindAndModify', false)
 
   const Container = new mongoose.Schema({
+    id: {
+      type: String,
+      required: true,
+    },
     created: {
       type: Date,
       default: Date.now,
@@ -12,6 +16,10 @@ function initMongoose() {
     last_modified: {
       type: Date,
       default: Date.now,
+    },
+    port: {
+      type: Number,
+      required: true,
     },
   })
 
@@ -28,6 +36,14 @@ function initMongoose() {
       required: true,
       validate: (value) => {
         return validator.isAlpha(value) && validator.isLength(value, 2, 50)
+      },
+    },
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: (value) => {
+        return validator.isLength(value, 3, 30)
       },
     },
     email: {
@@ -64,10 +80,11 @@ function initMongoose() {
       validate: (value) => {
         return validator.isUUID(value)
       },
-      container: {
-        type: String,
-        unique: true,
-      },
+    },
+    container: {
+      type: String,
+      unique: true,
+      default: null,
     },
   })
 
